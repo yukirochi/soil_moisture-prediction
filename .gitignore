@@ -1,0 +1,7 @@
+.venv
+dbt_soil_moisture/.env
+dbt_soil_moisture/profiles.yml
+dbt_soil_moisture/.user.yml
+model/.env
+model/__pycache__
+logs

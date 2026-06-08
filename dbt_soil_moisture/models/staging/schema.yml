@@ -1,0 +1,34 @@
+model:
+  - name: stg_data
+    description: "Staging model for soil moisture data"
+    config:
+      contracts:
+        enforced: true
+    columns:
+      - name: nitrogen
+        description: "Nitrogen content in the soil"
+        data_type: int
+
+      - name: phosphorous
+        description: "Phosphorous content in the soil"
+        data_type: int
+
+      - name: potassium
+        description: "Potassium content in the soil"
+        data_type: int
+
+      - name: temperature
+        description: "Temperature of the soil"
+        data_type: float
+
+      - name: humidity
+        description: "Humidity of the soil"
+        data_type: float
+
+      - name: ph
+        description: "pH level of the soil"
+        data_type: float
+
+      - name: soil_moisture
+        description: "Measured soil moisture level"
+        data_type: float

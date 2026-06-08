@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: soil_moisture_data
+    description: "Source data for soil moisture prediction"
+    schema: raw
+
+    tables:
+      - name: soil_moisture
+        description: "Raw soil moisture data collected from sensors"
