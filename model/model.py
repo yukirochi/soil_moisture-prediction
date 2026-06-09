@@ -2,29 +2,40 @@ from snowflake_profile import df
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.ensemble import RandomForestRegressor
+from matplotlib import pyplot as plt
+from sklearn.utils import shuffle
 
+df = df.dropna()
+x = np.array(df[['ATMOSPHERIC_TEMP','HUMIDITY','SOIL_TEMP','RAINFALL','PREVIOUS_SOIL_MOISTURE','SOIL_MOISTURE']]).reshape(-1, 6)
+y = np.array(df['FUTURE_SOIL_MOISTURE']).reshape(-1, 1)
 
-x = df[['TEMPERATURE','HUMIDITY','RAINFALL','PH','NITROGEN','PHOSPHOROUS','POTASSIUM']]
-y = df['SOIL_MOISTURE']
-
-
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, shuffle=False)
 
 lr_model = LinearRegression()
-dt_model = DecisionTreeRegressor(max_depth=5, random_state=42)
-rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
-
 lr_model.fit(X_train, y_train)
-dt_model.fit(X_train, y_train)
-rf_model.fit(X_train, y_train)
-
 lr_predictions = lr_model.predict(X_test)
-dt_predictions = dt_model.predict(X_test)
-rf_predictions = rf_model.predict(X_test)
+
 
 print("Linear Regression R2 Score:", r2_score(y_test, lr_predictions))
-print("Decision Tree R2 Score:", r2_score(y_test, dt_predictions))
-print("Random Forest R2 Score:", r2_score(y_test, rf_predictions))
+print("Linear Regression MSE:", mean_squared_error(y_test, lr_predictions))
+
+# # 1. Zoomed-in Time Series Plot (2 weeks / 336 hours)
+# subset_size = 336 # 24 hours * 14 days
+
+# plt.figure(figsize=(14, 6))
+# # Plotting just the first 336 hours of the test set
+# plt.plot(y_test[:subset_size], label='Actual Moisture', color='blue', alpha=0.8, linewidth=2)
+# plt.plot(lr_predictions[:subset_size], label='Predicted Moisture', color='red', alpha=0.8, linestyle='--', linewidth=2)
+
+# plt.title('Time Series Detail: 2-Week Hourly Window')
+# plt.xlabel('Time (Hours)')
+# plt.ylabel('Soil Moisture Level')
+# plt.legend()
+# plt.grid(True, alpha=0.3)
+
+# plt.savefig('zoomed_timeseries.png', dpi=300, bbox_inches='tight')
+# print("Saved zoomed time series plot!")
+
+
+

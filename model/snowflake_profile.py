@@ -14,7 +14,7 @@ conn = snowflake.connector.connect(
 )
 
 cur = conn.cursor()
-sql = 'SELECT * FROM staging.stg_data'
+sql = 'SELECT ATMOSPHERIC_TEMP, HUMIDITY, SOIL_TEMP, SOIL_MOISTURE, PREVIOUS_SOIL_MOISTURE, FUTURE_SOIL_MOISTURE,RAINFALL FROM staging.stg_data'
 
 df = cur.execute(sql).fetch_pandas_all()
 
